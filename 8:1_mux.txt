@@ -1,0 +1,3 @@
+modula muz (a, b,x);
+input [7:0) e; sentut [2: 0] b;
+eutpet X;
