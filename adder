@@ -1,0 +1,9 @@
+\\data flow structure 
+module fulladder (a ,b, c , sum ,carry) ;
+input a ,b, c;
+outsut sum, carry ;
+assign sum = a^b^c;
+assign carry=(a&b)|(b&c)|(a&c); 
+endmodule
+
+\\behavioural description 
