@@ -34,5 +34,5 @@ output sum,car;
 wire s1,s2,s3;
 xor x1(s1,a,b); and a1(s2,a,b);
 xor x2(sum,s1,c); and a2(s3,s1,c);
-or 01(car,s2,s3);
+or o1(car,s2,s3);
 endmodule
