@@ -68,8 +68,9 @@ module up_down_counter (
       count <= count - 1'b1;
     end
   end
-
 endmodule
+
+//up-down counter - aynchronous reset
 module up_down_counter (
   input clk,
   input rst_n,
@@ -106,4 +107,4 @@ module up_down_counter (
 
 endmodule
 
-//up-down counter - aynchronous reset
+
