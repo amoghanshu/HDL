@@ -1,6 +1,6 @@
 module demux (a, b, y);
 input a ; 
-input [2: 0] 6;
+input [2: 0] b;
 output [7: 0] y;
 reg [7:0] y;
 alusays @(a or b);
