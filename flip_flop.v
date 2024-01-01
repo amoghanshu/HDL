@@ -1,5 +1,5 @@
 //SR flipflop
-odule SR_flipflop (
+module SR_flipflop (
   input clk,
   input rst_n,
   input s,
@@ -8,23 +8,22 @@ odule SR_flipflop (
   output q_bar
 );
 
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    q <= 1'b0;
-  end else begin
-    case ({s, r})
-      2'b00: q <= q; // No change
-      2'b01: q <= 1'b0; // Reset
-      2'b10: q <= 1'b1; // Set
-      2'b11: q <= 1'bx; // Invalid inputs
-    endcase
+  always @(posedge clk) begin
+    if (!rst_n) begin
+      q <= 0; // Asynchronous reset (active low)
+    end else begin
+      case ({s, r})
+        2'b00: q <= q; // No change
+        2'b01: q <= 1'b0; // Reset
+        2'b10: q <= 1'b1; // Set
+        2'b11: q <= 1'bx; // Invalid inputs
+      endcase
+    end
   end
-end
 
-assign q_bar = ~q;
+  assign q_bar = ~q; // Inverted output
 
 endmodule
-
 
 //JK flipflop
 module JK_flipflop (
@@ -36,43 +35,41 @@ module JK_flipflop (
   output q_bar
 );
 
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    q <= 1'b0;
-  end else begin
-    case ({j, k})
-      2'b00: q <= q; // No change
-      2'b01: q <= 1'b0; // Reset
-      2'b10: q <= 1'b1; // Set
-      2'b11: q <= ~q; // Toggle
-    endcase
+  always @(posedge clk) begin
+    if (!rst_n) begin
+      q <= 0; // Asynchronous reset (active low)
+    end else begin
+      case ({j, k})
+        2'b00: q <= q;  // No change
+        2'b01: q <= 1'b0; // Reset
+        2'b10: q <= 1'b1; // Set
+        2'b11: q <= ~q; // Toggle
+      endcase
+    end
   end
-end
 
-assign q_bar = ~q;
+  assign q_bar = ~q; // Inverted output
 
 endmodule
 
 
 //D flip-flop
-module D_flipflop (
-  input clk,
-  input rst_n,
-  input d,
-  output reg q,
-  output q_bar
-);
+module dff(clk, reset, rstn, d, q);
+  input clk, reset, rstn, d;
+  output reg q;
 
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    q <= 1'b0;
-  end else begin
-    q <= d;
-  end
-end
-
-assign q_bar = ~q;
-
+  always @(posedge clk or negedge rstn) // Asynchronous reset
+    begin
+      if (!rstn)
+        q <= 0;
+      else
+        begin
+          if (reset) // Synchronous reset
+            q <= 0;
+          else
+            q <= d;
+        end
+    end
 endmodule
 
 //T flip-flop
@@ -84,14 +81,14 @@ module T_flipflop (
   output q_bar
 );
 
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    q <= 1'b0;
-  end else begin
-    q <= ~q ^ t;
+  always @(posedge clk) begin
+    if (!rst_n) begin
+      q <= 0; // Asynchronous reset (active low)
+    end else begin
+      q <= t ? ~q : q; // Toggle if t is 1, else hold current value
+    end
   end
-end
 
-assign q_bar = ~q;
+  assign q_bar = ~q; // Inverted output
 
 endmodule
