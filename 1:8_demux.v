@@ -3,7 +3,7 @@ input a ;
 input [2: 0] b;
 output [7: 0] y;
 reg [7:0] y;
-alusays @(a or b);
+always @(a or b);
 case (b) 3'b000 : y [0]=a;
 3'b001: y[1]= a;
 3'b010: y[2]=а;
